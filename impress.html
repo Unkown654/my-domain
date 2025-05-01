@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Special Proposal</title>
+  <style>
+    @keyframes gradientBG {
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
+    }
+    @keyframes fadeIn {
+      from {opacity: 0;}
+      to {opacity: 1;}
+    }
+    @keyframes heartBeat {
+      0%, 100% {transform: scale(1);}
+      50% {transform: scale(1.3);}
+    }
+    @keyframes confettiFall {
+      0% {transform: translateY(0) rotate(0deg);}
+      100% {transform: translateY(100vh) rotate(360deg);}
+    }
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #fad0c4, #ff9a9e);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      flex-direction: column;
+      text-align: center;
+      color: #b30059;
+      overflow: hidden;
+    }
+    button {
+      background-color: #ff66b2;
+      border: none;
+      padding: 18px 36px;
+      font-size: 1.4rem;
+      color: white;
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: 0 6px 12px rgba(255, 102, 178, 0.6);
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+    button:hover {
+      background-color: #e60073;
+      transform: scale(1.05);
+    }
+    .message {
+      margin-top: 30px;
+      font-size: 1.8rem;
+      max-width: 450px;
+      display: none;
+      animation: fadeIn 2s ease forwards;
+      line-height: 1.4;
+    }
+    .heart {
+      margin-top: 20px;
+      width: 100px;
+      height: 90px;
+      position: relative;
+      display: none;
+      animation: heartBeat 1s ease infinite;
+      cursor: default;
+    }
+    .heart::before,
+    .heart::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      width: 50px;
+      height: 80px;
+      background: #ff3366;
+      border-radius: 50px 50px 0 0;
+      transform-origin: center bottom;
+    }
+    .heart::before {
+      left: 50px;
+      transform: rotate(-45deg);
+    }
+    .heart::after {
+      left: 0;
+      transform: rotate(45deg);
+    }
+    .confetti {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      background-color: #ff3366;
+      opacity: 0.8;
+      top: -10px;
+      animation: confettiFall 3s linear forwards;
+      border-radius: 2px;
+      pointer-events: none;
+      z-index: 9999;
+    }
+  </style>
+</head>
+<body>
+  <div id="nameInputContainer">
+    <label for="nameInput" style="font-size: 1.5rem; margin-bottom: 10px; display: block; color: #b30059;">Enter Your lovely name please:</label>
+    <input type="text" id="nameInput" placeholder="Your name" style="padding: 10px; font-size: 1.2rem; border-radius: 6px; border: 1px solid #ff66b2; max-width: 300px; width: 100%; text-align: center;" />
+    <button id="submitNameBtn" style="margin-top: 15px; background-color: #ff66b2; border: none; padding: 12px 24px; font-size: 1.2rem; color: white; border-radius: 8px; cursor: pointer; box-shadow: 0 4px 8px rgba(255, 102, 178, 0.4); transition: background-color 0.3s ease;">Submit</button>
+  </div>
+
+  <div id="passwordInputContainer" style="display:none;">
+    <label for="passwordInput" style="font-size: 1.5rem; margin-bottom: 10px; display: block; color: #b30059;">Enter the password please:</label>
+    <input type="password" id="passwordInput" placeholder="Password" style="padding: 10px; font-size: 1.2rem; border-radius: 6px; border: 1px solid #ff66b2; max-width: 300px; width: 100%; text-align: center;" />
+    <button id="submitPasswordBtn" style="margin-top: 15px; background-color: #ff66b2; border: none; padding: 12px 24px; font-size: 1.2rem; color: white; border-radius: 8px; cursor: pointer; box-shadow: 0 4px 8px rgba(255, 102, 178, 0.4); transition: background-color 0.3s ease;">Submit</button>
+  </div>
+
+  <button id="proposeBtn" style="display:none;">Before we Proceed Let me Ask you something</button>
+
+  <div id="ardhanginiContainer" style="display:none; margin-top: 20px; position: relative; width: 320px; height: 120px;">
+    <p style="font-size: 1.5rem; color: #b30059; margin-bottom: 15px;">Will you be My Ardhangini For Life long?</p>
+    <button id="yesBtn" style="background: linear-gradient(45deg, #ff66b2, #ff3399); border: none; padding: 10px 20px; font-size: 1.2rem; color: white; border-radius: 20px; cursor: pointer; margin-right: 20px; box-shadow: 0 8px 20px rgba(255, 51, 153, 0.8); transition: background 0.3s ease, transform 0.3s ease; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Yes</button>
+    <button id="noBtn" style="background-color: #e60073; border: none; padding: 12px 24px; font-size: 1.2rem; color: white; border-radius: 8px; cursor: pointer; position: relative; box-shadow: 0 4px 8px rgba(230, 0, 115, 0.4); transition: background-color 0.3s ease;">No</button>
+  </div>
+
+  <div id="knewItContainer" style="display:none; margin-top: 20px; text-align: center; color: #b30059; font-size: 1.5rem;">
+    <p>I knew it You Also want me</p>
+    <button id="nextBtn" style="margin-top: 15px; background-color: #ff66b2; border: none; padding: 12px 24px; font-size: 1.2rem; color: white; border-radius: 8px; cursor: pointer; box-shadow: 0 4px 8px rgba(255, 102, 178, 0.4); transition: background-color 0.3s ease;">Next</button>
+  </div>
+
+  <div id="trainQuestionContainer" style="display:none; margin-top: 20px; text-align: center; color: #b30059; font-size: 1.5rem;">
+    <p><span style="background-color: yellow; font-weight: bold;">Once You asked me in train Why Only You</span></p>
+    <p>So here is your answer</p>
+    <button id="trainNextBtn" style="margin-top: 15px; background-color: #ff66b2; border: none; padding: 12px 24px; font-size: 1.2rem; color: white; border-radius: 8px; cursor: pointer; box-shadow: 0 4px 8px rgba(255, 102, 178, 0.4); transition: background-color 0.3s ease;">Next</button>
+  </div>
+
+  <div class="message" id="message" style="display:none;">
+    <p id="greeting"></p>
+    <p><strong>Will you be my special someone?</strong> 💖</p>
+  </div>
+
+  <div id="shayariContainer" style="display:none; margin-top: 20px; text-align: center; color: #b30059; font-size: 1.5rem; max-width: 450px;">
+    <p>1...Itni shiddat se maine tumhe paane ki koshish ki hai, ki har zarre ne mujhe tumse milane ki saazish ki hai</p>
+    <p>2... Bachpan ki mohabbat ko dil se na juda karna, jab yaad meri aaye milne ki dua karna.</p>
+    <p>3..pyar to bohot log karte h magar mere jesa pyar koi nhi kar skta kuki kisi ke pass tum jo nahi</p>
+    <p><strong>I chose you because it's You My Girl</strong></p>
+    <button id="shayariNextBtn" style="margin-top: 15px; background-color: #ff66b2; border: none; padding: 12px 24px; font-size: 1.2rem; color: white; border-radius: 8px; cursor: pointer; box-shadow: 0 4px 8px rgba(255, 102, 178, 0.4); transition: background-color 0.3s ease;">Next</button>
+  </div>
+
+  <div id="shadiContainer" style="display:none; margin-top: 20px; position: relative; width: 360px; height: 140px; color: #b30059; font-size: 1.5rem; text-align: center;">
+    <p style="margin-bottom: 15px;">Shizuka Jab hum bade ho jynge tb kya tum mujse shadi karogi?</p>
+    <button id="shadiYesBtn" style="background: linear-gradient(45deg, #ff66b2, #ff3399); border: none; padding: 10px 20px; font-size: 1.2rem; color: white; border-radius: 20px; cursor: pointer; margin-right: 20px; box-shadow: 0 8px 20px rgba(255, 51, 153, 0.8); transition: background 0.3s ease, transform 0.3s ease; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Yes</button>
+    <button id="shadiNoBtn" style="background-color: #e60073; border: none; padding: 12px 24px; font-size: 1.2rem; color: white; border-radius: 8px; cursor: pointer; position: relative; box-shadow: 0 4px 8px rgba(230, 0, 115, 0.4); transition: background-color 0.3s ease;">No</button>
+    <button id="shadiNextBtn" style="display:none; margin-top: 15px; background-color: #ff66b2; border: none; padding: 12px 24px; font-size: 1.2rem; color: white; border-radius: 8px; cursor: pointer; box-shadow: 0 4px 8px rgba(255, 102, 178, 0.4); transition: background-color 0.3s ease;">Next</button>
+  </div>
+
+  
+  <div id="lastShadiContainer" style="display:none; margin-top: 20px; position: relative; width: 360px; height: 140px; color: #b30059; font-size: 1.5rem; text-align: center;">
+    <p style="margin-bottom: 15px;">Shizuka Jab hum bade ho jynge tb kya tum mujse shadi karogi?</p>
+    <button id="lastShadiYesBtn" style="background: linear-gradient(45deg, #ff66b2, #ff3399); border: none; padding: 10px 20px; font-size: 1.2rem; color: white; border-radius: 20px; cursor: pointer; margin-right: 20px; box-shadow: 0 8px 20px rgba(255, 51, 153, 0.8); transition: background 0.3s ease, transform 0.3s ease; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Yes</button>
+    <button id="lastShadiNoBtn" style="background-color: #e60073; border: none; padding: 12px 24px; font-size: 1.2rem; color: white; border-radius: 8px; cursor: pointer; position: relative; box-shadow: 0 4px 8px rgba(230, 0, 115, 0.4); transition: background-color 0.3s ease;">No</button>
+    <button id="lastShadiNextBtn" style="display:none; margin-top: 15px; background-color: #ff66b2; border: none; padding: 12px 24px; font-size: 1.2rem; color: white; border-radius: 8px; cursor: pointer; box-shadow: 0 4px 8px rgba(255, 102, 178, 0.4); transition: background-color 0.3s ease;">Next</button>
+  </div>
+
+  <div id="shadiContainer2" style="display:none; margin-top: 20px; position: relative; width: 360px; height: 140px; color: #b30059; font-size: 1.5rem; text-align: center;">
+    <p style="margin-bottom: 15px;">shizuka=yaani tum?</p>
+    <button id="shadi2YesBtn" style="background: linear-gradient(45deg, #ff66b2, #ff3399); border: none; padding: 10px 20px; font-size: 1.2rem; color: white; border-radius: 20px; cursor: pointer; margin-right: 20px; box-shadow: 0 8px 20px rgba(255, 51, 153, 0.8); transition: background 0.3s ease, transform 0.3s ease; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Yes</button>
+    <button id="shadi2NoBtn" style="background-color: #e60073; border: none; padding: 12px 24px; font-size: 1.2rem; color: white; border-radius: 8px; cursor: pointer; position: relative; box-shadow: 0 4px 8px rgba(230, 0, 115, 0.4); transition: background-color 0.3s ease;">No</button>
+    <button id="shadi2NextBtn" style="display:none; margin-top: 15px; background-color: #ff66b2; border: none; padding: 12px 24px; font-size: 1.2rem; color: white; border-radius: 8px; cursor: pointer; box-shadow: 0 4px 8px rgba(255, 102, 178, 0.4); transition: background-color 0.3s ease;">Next</button>
+  </div>
+
+  <div id="shadiContainer3" style="display:none; margin-top: 20px; position: relative; width: 360px; height: 140px; color: #b30059; font-size: 1.5rem; text-align: center;">
+    <p style="margin-bottom: 15px;">nobita=yaani me?</p>
+    <button id="shadi3YesBtn" style="background: linear-gradient(45deg, #ff66b2, #ff3399); border: none; padding: 10px 20px; font-size: 1.2rem; color: white; border-radius: 20px; cursor: pointer; margin-right: 20px; box-shadow: 0 8px 20px rgba(255, 51, 153, 0.8); transition: background 0.3s ease, transform 0.3s ease; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Yes</button>
+    <button id="shadi3NoBtn" style="background-color: #e60073; border: none; padding: 12px 24px; font-size: 1.2rem; color: white; border-radius: 8px; cursor: pointer; position: relative; box-shadow: 0 4px 8px rgba(230, 0, 115, 0.4); transition: background-color 0.3s ease;">No</button>
+    <button id="shadi3NextBtn" style="display:none; margin-top: 15px; background-color: #ff66b2; border: none; padding: 12px 24px; font-size: 1.2rem; color: white; border-radius: 8px; cursor: pointer; box-shadow: 0 4px 8px rgba(255, 102, 178, 0.4); transition: background-color 0.3s ease;">Next</button>
+  </div>
+
+  <div id="shizukaNobitaContainer" style="display:none; margin-top: 20px; color: #b30059; font-size: 1.3rem; max-width: 360px; text-align: center;">
+    <p><strong>Shizuka = Yaani Tum</strong></p>
+    <p><strong>Nobita = Yaani Me</strong></p>
+  </div>
+
+  <div id="finalLoveContainer" style="display:none; margin-top: 40px; text-align: center; color: #ff3366; font-size: 2rem; font-weight: bold; position: relative; width: 200px; height: 180px; margin-left: auto; margin-right: auto;">
+    <div style="position: relative; width: 200px; height: 180px; margin: 0 auto;">
+      <div style="width: 100px; height: 90px; background: #ff3366; position: absolute; top: 0; left: 50px; border-radius: 50px 50px 0 0; transform: rotate(-45deg); transform-origin: 0 100%;"></div>
+      <div style="width: 100px; height: 90px; background: #ff3366; position: absolute; top: 0; left: 50px; border-radius: 50px 50px 0 0; transform: rotate(45deg); transform-origin: 100% 100%;"></div>
+      <div style="width: 140px; height: 140px; background: #ff3366; position: absolute; top: 30px; left: 30px; border-radius: 70px 70px 70px 70px;"></div>
+      <div style="position: absolute; top: 70px; left: 0; width: 200px; text-align: center; color: white; font-size: 1.8rem; font-weight: bold; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+        I LOVE YOU MY LOVE
+      </div>
+    </div>
+  </div>
+
+  <div id="heart" class="heart" style="display:none;"></div>
+
+  <script>
+    function createConfetti() {
+      const confetti = document.createElement('div');
+      confetti.classList.add('confetti');
+      confetti.style.left = Math.random() * window.innerWidth + 'px';
+      confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 70%, 60%)`;
+      document.body.appendChild(confetti);
+      setTimeout(() => {
+        confetti.remove();
+      }, 3000);
+    }
+
+    document.getElementById('submitNameBtn').addEventListener('click', function() {
+      const nameInput = document.getElementById('nameInput');
+      const name = nameInput.value.trim();
+      if(name === '') {
+        alert('Please enter your lovely name.');
+        return;
+      }
+      if(name.toLowerCase() !== 'radhika') {
+        alert('Write only your good name');
+        return;
+      }
+      // Hide name input container
+      document.getElementById('nameInputContainer').style.display = 'none';
+      // Show password input container
+      document.getElementById('passwordInputContainer').style.display = 'block';
+    });
+
+    document.getElementById('submitPasswordBtn').addEventListener('click', function() {
+      const passwordInput = document.getElementById('passwordInput');
+      const password = passwordInput.value.trim();
+      if(password === '') {
+        alert('Please enter the password.');
+        return;
+      }
+      if(password.toLowerCase() !== 'aniket') {
+        alert('Incorrect password, please try again.');
+        return;
+      }
+      // Hide password input container
+      document.getElementById('passwordInputContainer').style.display = 'none';
+      // Show propose button
+      const proposeBtn = document.getElementById('proposeBtn');
+      proposeBtn.style.display = 'inline-block';
+      // Set greeting message with password name
+      document.getElementById('greeting').textContent = `Hey Radhika, I just wanted to say something...`;
+    });
+
+    document.getElementById('proposeBtn').addEventListener('click', function() {
+      // Hide the button itself
+      this.style.display = 'none';
+      // Show the Ardhangini container
+      const ardhanginiContainer = document.getElementById('ardhanginiContainer');
+      ardhanginiContainer.style.display = 'block';
+    });
+
+    const noBtn = document.getElementById('noBtn');
+  noBtn.addEventListener('mouseenter', function() {
+    moveNoButton();
+  });
+  noBtn.addEventListener('click', function(event) {
+    event.preventDefault();
+    moveNoButton();
+  });
+
+  function moveNoButton() {
+    const container = document.getElementById('ardhanginiContainer');
+    const noBtn = document.getElementById('noBtn');
+    const containerRect = container.getBoundingClientRect();
+    const btnRect = noBtn.getBoundingClientRect();
+
+    // Get the bounding rect of the question text (the <p> element)
+    const questionText = container.querySelector('p');
+    const questionRect = questionText.getBoundingClientRect();
+
+    let randomX, randomY;
+    let tries = 0;
+    const maxTries = 100;
+
+    do {
+      randomX = Math.floor(Math.random() * (containerRect.width - btnRect.width));
+      randomY = Math.floor(Math.random() * (containerRect.height - btnRect.height));
+      tries++;
+
+      // Calculate the absolute position of the noBtn if placed at randomX, randomY relative to container
+      const absX = containerRect.left + randomX;
+      const absY = containerRect.top + randomY;
+
+      // Check if noBtn overlaps or touches the question text area (with some padding)
+      const padding = 10;
+      const overlapX = !(absX + btnRect.width + padding < questionRect.left || absX > questionRect.right + padding);
+      const overlapY = !(absY + btnRect.height + padding < questionRect.top || absY > questionRect.bottom + padding);
+
+      if (!(overlapX && overlapY)) {
+        // No overlap
+        break;
+      }
+    } while (tries < maxTries);
+
+    noBtn.style.position = 'absolute';
+    noBtn.style.left = randomX + 'px';
+    noBtn.style.top = randomY + 'px';
+  }
+
+    document.getElementById('yesBtn').addEventListener('click', function() {
+      // Hide Ardhangini container
+      document.getElementById('ardhanginiContainer').style.display = 'none';
+      // Show the new container with "I knew it You Also want me"
+      const knewItContainer = document.getElementById('knewItContainer');
+      knewItContainer.style.display = 'block';
+    });
+
+    // Add event listener for Next button in knewItContainer
+    document.getElementById('nextBtn').addEventListener('click', function() {
+      // Hide knewItContainer
+      document.getElementById('knewItContainer').style.display = 'none';
+      // Show the new container with the train question
+      const trainQuestionContainer = document.getElementById('trainQuestionContainer');
+      trainQuestionContainer.style.display = 'block';
+    });
+
+    // Define named function for trainQuestionContainer click handler (not used)
+    function trainQuestionClickHandler() {
+      const trainQuestionContainer = document.getElementById('trainQuestionContainer');
+      trainQuestionContainer.style.display = 'none';
+
+      const message = document.getElementById('message');
+      message.style.display = 'block';
+
+      const heart = document.getElementById('heart');
+      heart.style.display = 'block';
+
+      for(let i = 0; i < 30; i++) {
+        setTimeout(createConfetti, i * 100);
+      }
+    }
+
+    // Ensure no event listener attached to trainQuestionContainer click
+    const trainQuestionContainer = document.getElementById('trainQuestionContainer');
+    trainQuestionContainer.removeEventListener('click', trainQuestionClickHandler);
+
+    // Add event listener for trainNextBtn to show final message container
+    document.getElementById('trainNextBtn').addEventListener('click', function() {
+      const trainQuestionContainer = document.getElementById('trainQuestionContainer');
+      trainQuestionContainer.style.display = 'none';
+
+      const shayariContainer = document.getElementById('shayariContainer');
+      shayariContainer.style.display = 'block';
+    });
+
+    // Add event listener for shayariNextBtn to hide shayariContainer and show message container
+    document.getElementById('shayariNextBtn').addEventListener('click', function() {
+      const shayariContainer = document.getElementById('shayariContainer');
+      shayariContainer.style.display = 'none';
+
+      const shadiContainer = document.getElementById('shadiContainer');
+      shadiContainer.style.display = 'block';
+    });
+  </script>
+</thinking>
+
+<edit_file>
+<path></path>
+<content>
+
+  </script>
+
+  <script>
+    // Add event listener for shayariNextBtn to hide shayariContainer on click
+    document.getElementById('shayariNextBtn').addEventListener('click', function() {
+      const shayariContainer = document.getElementById('shayariContainer');
+      shayariContainer.style.display = 'none';
+
+      const shadiContainer = document.getElementById('shadiContainer');
+      shadiContainer.style.display = 'block';
+    });
+  </script>
+
+  <script>
+    // Shadi container 1 buttons behavior
+    const shadiYesBtn = document.getElementById('shadiYesBtn');
+    const shadiNoBtn = document.getElementById('shadiNoBtn');
+    const shadiNextBtn = document.getElementById('shadiNextBtn');
+
+    shadiYesBtn.addEventListener('click', function() {
+      shadiYesBtn.style.display = 'none';
+      shadiNoBtn.style.display = 'none';
+      shadiNextBtn.style.display = 'inline-block';
+    });
+
+    const lastShadiYesBtn = document.getElementById('lastShadiYesBtn');
+    const lastShadiNoBtn = document.getElementById('lastShadiNoBtn');
+    const lastShadiNextBtn = document.getElementById('lastShadiNextBtn');
+
+    lastShadiYesBtn.addEventListener('click', function() {
+      lastShadiYesBtn.style.display = 'none';
+      lastShadiNoBtn.style.display = 'none';
+      lastShadiNextBtn.style.display = 'inline-block';
+    });
+
+    function moveLastShadiNoButton() {
+      const container = document.getElementById('lastShadiContainer');
+      const noBtn = lastShadiNoBtn;
+      const containerRect = container.getBoundingClientRect();
+      const btnRect = noBtn.getBoundingClientRect();
+
+      let randomX, randomY;
+      let tries = 0;
+      const maxTries = 100;
+
+      do {
+        randomX = Math.floor(Math.random() * (containerRect.width - btnRect.width));
+        randomY = Math.floor(Math.random() * (containerRect.height - btnRect.height));
+        tries++;
+
+        const absX = containerRect.left + randomX;
+        const absY = containerRect.top + randomY;
+
+        const padding = 10;
+        const questionText = container.querySelector('p');
+        const questionRect = questionText.getBoundingClientRect();
+
+        const overlapX = !(absX + btnRect.width + padding < questionRect.left || absX > questionRect.right + padding);
+        const overlapY = !(absY + btnRect.height + padding < questionRect.top || absY > questionRect.bottom + padding);
+
+        if (!(overlapX && overlapY)) {
+          break;
+        }
+      } while (tries < maxTries);
+
+      noBtn.style.position = 'absolute';
+      noBtn.style.left = randomX + 'px';
+      noBtn.style.top = randomY + 'px';
+    }
+
+    lastShadiNoBtn.addEventListener('mouseenter', moveLastShadiNoButton);
+    lastShadiNoBtn.addEventListener('click', function(event) {
+      event.preventDefault();
+      moveLastShadiNoButton();
+    });
+
+    lastShadiNextBtn.addEventListener('click', function() {
+      const lastShadiContainer = document.getElementById('lastShadiContainer');
+      lastShadiContainer.style.display = 'none';
+      // You can add next container or final action here if needed
+    });
+
+    function moveShadiNoButton() {
+      const container = document.getElementById('shadiContainer');
+      const noBtn = shadiNoBtn;
+      const containerRect = container.getBoundingClientRect();
+      const btnRect = noBtn.getBoundingClientRect();
+
+      let randomX, randomY;
+      let tries = 0;
+      const maxTries = 100;
+
+      do {
+        randomX = Math.floor(Math.random() * (containerRect.width - btnRect.width));
+        randomY = Math.floor(Math.random() * (containerRect.height - btnRect.height));
+        tries++;
+
+        const absX = containerRect.left + randomX;
+        const absY = containerRect.top + randomY;
+
+        const padding = 10;
+        const questionText = container.querySelector('p');
+        const questionRect = questionText.getBoundingClientRect();
+
+        const overlapX = !(absX + btnRect.width + padding < questionRect.left || absX > questionRect.right + padding);
+        const overlapY = !(absY + btnRect.height + padding < questionRect.top || absY > questionRect.bottom + padding);
+
+        if (!(overlapX && overlapY)) {
+          break;
+        }
+      } while (tries < maxTries);
+
+      noBtn.style.position = 'absolute';
+      noBtn.style.left = randomX + 'px';
+      noBtn.style.top = randomY + 'px';
+    }
+
+    shadiNoBtn.addEventListener('mouseenter', moveShadiNoButton);
+    shadiNoBtn.addEventListener('click', function(event) {
+      event.preventDefault();
+      moveShadiNoButton();
+    });
+
+    shadiNextBtn.addEventListener('click', function() {
+      const shadiContainer = document.getElementById('shadiContainer');
+      shadiContainer.style.display = 'none';
+
+      const finalLoveContainer = document.getElementById('finalLoveContainer');
+      finalLoveContainer.style.display = 'block';
+    });
+
+    lastShadiNextBtn.addEventListener('click', function() {
+      const lastShadiContainer = document.getElementById('lastShadiContainer');
+      lastShadiContainer.style.display = 'none';
+      // You can add next container or final action here if needed
+    });
+
+    // Shadi container 2 buttons behavior
+    const shadi2YesBtn = document.getElementById('shadi2YesBtn');
+    const shadi2NoBtn = document.getElementById('shadi2NoBtn');
+    const shadi2NextBtn = document.getElementById('shadi2NextBtn');
+
+    shadi2YesBtn.addEventListener('click', function() {
+      shadi2YesBtn.style.display = 'none';
+      shadi2NoBtn.style.display = 'none';
+      shadi2NextBtn.style.display = 'inline-block';
+    });
+
+    function moveShadi2NoButton() {
+      const container = document.getElementById('shadiContainer2');
+      const noBtn = shadi2NoBtn;
+      const containerRect = container.getBoundingClientRect();
+      const btnRect = noBtn.getBoundingClientRect();
+
+      let randomX, randomY;
+      let tries = 0;
+      const maxTries = 100;
+
+      do {
+        randomX = Math.floor(Math.random() * (containerRect.width - btnRect.width));
+        randomY = Math.floor(Math.random() * (containerRect.height - btnRect.height));
+        tries++;
+
+        const absX = containerRect.left + randomX;
+        const absY = containerRect.top + randomY;
+
+        const padding = 10;
+        const questionText = container.querySelector('p');
+        const questionRect = questionText.getBoundingClientRect();
+
+        const overlapX = !(absX + btnRect.width + padding < questionRect.left || absX > questionRect.right + padding);
+        const overlapY = !(absY + btnRect.height + padding < questionRect.top || absY > questionRect.bottom + padding);
+
+        if (!(overlapX && overlapY)) {
+          break;
+        }
+      } while (tries < maxTries);
+
+      noBtn.style.position = 'absolute';
+      noBtn.style.left = randomX + 'px';
+      noBtn.style.top = randomY + 'px';
+    }
+
+    shadi2NoBtn.addEventListener('mouseenter', moveShadi2NoButton);
+    shadi2NoBtn.addEventListener('click', function(event) {
+      event.preventDefault();
+      moveShadi2NoButton();
+    });
+
+    shadi2NextBtn.addEventListener('click', function() {
+      const shadiContainer2 = document.getElementById('shadiContainer2');
+      shadiContainer2.style.display = 'none';
+
+      shadi2NextBtn.style.display = 'none';
+
+      const shadiContainer3 = document.getElementById('shadiContainer3');
+      shadiContainer3.style.display = 'block';
+    });
+
+    const shadi3YesBtn = document.getElementById('shadi3YesBtn');
+    const shadi3NoBtn = document.getElementById('shadi3NoBtn');
+    const shadi3NextBtn = document.getElementById('shadi3NextBtn');
+
+    shadi3YesBtn.addEventListener('click', function() {
+      shadi3YesBtn.style.display = 'none';
+      shadi3NoBtn.style.display = 'none';
+      shadi3NextBtn.style.display = 'inline-block';
+    });
+
+    function moveShadi3NoButton() {
+      const container = document.getElementById('shadiContainer3');
+      const noBtn = shadi3NoBtn;
+      const containerRect = container.getBoundingClientRect();
+      const btnRect = noBtn.getBoundingClientRect();
+
+      let randomX, randomY;
+      let tries = 0;
+      const maxTries = 100;
+
+      do {
+        randomX = Math.floor(Math.random() * (containerRect.width - btnRect.width));
+        randomY = Math.floor(Math.random() * (containerRect.height - btnRect.height));
+        tries++;
+
+        const absX = containerRect.left + randomX;
+        const absY = containerRect.top + randomY;
+
+        const padding = 10;
+        const questionText = container.querySelector('p');
+        const questionRect = questionText.getBoundingClientRect();
+
+        const overlapX = !(absX + btnRect.width + padding < questionRect.left || absX > questionRect.right + padding);
+        const overlapY = !(absY + btnRect.height + padding < questionRect.top || absY > questionRect.bottom + padding);
+
+        if (!(overlapX && overlapY)) {
+          break;
+        }
+      } while (tries < maxTries);
+
+      noBtn.style.position = 'absolute';
+      noBtn.style.left = randomX + 'px';
+      noBtn.style.top = randomY + 'px';
+    }
+
+    shadi3NoBtn.addEventListener('mouseenter', moveShadi3NoButton);
+    shadi3NoBtn.addEventListener('click', function(event) {
+      event.preventDefault();
+      moveShadi3NoButton();
+    });
+
+  </script>
+</body>
+</html>
